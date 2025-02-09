@@ -1,0 +1,22 @@
+{% extends "layout.html" %} 
+{% block content %}
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.code }}</p>
+    {% if current_user.type == 'Professor' %}
+        <a href="{{url_for('attendances.create_attendance', course_id = course.id)}}">Create Attendance</a>
+        <a href="{{ url_for('courses.delete_course', course_id = course.id)}}">Delete Course</a>
+    {% else %}
+        <a href="{{ url_for('attendances.check_attendance', course_id = course.id)}}">Check for Attendance</a>
+        <a href="{{ url_for('courses.leave_course', course_id = course.id)}}">Leave Course</a>
+    {% endif %}
+
+        <div>
+            attendance history:
+            {{ course.attendances }}
+            {% for attendance in course.attendances %}
+            <div>
+                <p>{{attendance.users}}</p>
+            </div>
+            {% endfor %}
+        </div>
+{% endblock content %}

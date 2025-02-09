@@ -68,4 +68,34 @@ def join_course():
 @courses.route('/courses/<int:course_id>')
 @login_required
 def view_course(course_id):
-    return render_template('home.html', title = 'Join Course')
+    course = Course.query.filter_by(id=course_id).first()
+    return render_template('course.html', title = 'Course', course = course)
+
+@courses.route('/courses/<int:course_id>/delete')
+@login_required
+def delete_course(course_id):
+    #check if user is a student
+    if current_user.type == 'Student':
+        return redirect(url_for('courses.view_course', course_id = course_id))
+    course = Course.query.filter_by(id=course_id).first()
+        
+    db.session.delete(course)
+    db.session.commit()
+    return redirect(url_for('courses.my_courses'))
+
+@courses.route('/courses/<int:course_id>/leave')
+@login_required
+def leave_course(course_id):
+    #check if user is a professor
+    if current_user.type == 'Professor':
+        return redirect(url_for('courses.view_course', course_id = course_id))
+    course = Course.query.filter_by(id=course_id).first()
+    
+    try:
+        current_user.courses.remove(course)
+    except ValueError as e:
+        print(f"Error: {e}")
+    return redirect(url_for('courses.my_courses'))
+
+
+

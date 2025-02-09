@@ -24,9 +24,11 @@ def create_app(config_class = Config):
     from bark.main.routes import main
     from bark.users.routes import users
     from bark.courses.routes import courses
+    from bark.attendances.routes import attendances
     
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(courses)
+    app.register_blueprint(attendances)
     
     return app

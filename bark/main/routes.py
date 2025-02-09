@@ -26,6 +26,7 @@ def create():
     db.session.add(testuser2)
     
     testuser.courses.append(testcourse)
+    testuser2.courses.append(testcourse)
     testuser.attendances.append(testattendance)
     testcourse.attendances.append(testattendance)
     db.session.commit()
@@ -39,4 +40,15 @@ def create():
     
     print("attend users: ")
     print(testattendance.users)
+    return render_template('create.html', posts = users)
+
+@main.route("/check")
+def check():
+
+    users = User.query.all()
+    courses = Course.query.all()
+    attendances = Attendance.query.all()
+    print(users)
+    print(courses)
+    print(attendances)
     return render_template('create.html', posts = users)

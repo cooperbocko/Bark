@@ -36,13 +36,11 @@ class User(db.Model, UserMixin):
     courses = db.relationship('Course', secondary=user_courses, backref='users', lazy='select')
     #many to many
     attendances = db.relationship('Attendance', secondary=user_attendances, backref='users', lazy='select')
-    #one to many
-    
     
     #methods
     def get_token(self):
         s = Serializer(current_app.config['SECRET_KEY'])
-        return s.dumps({'email': self.email, 'password': self.password, 'type': self.type, 'is_validated': self.is_validated})
+        return s.dumps({'email': self.email, 'password': self.password, 'type': self.type})
     
     @staticmethod
     def verify_token(token, expires_sec=1800):
