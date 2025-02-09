@@ -1,0 +1,14 @@
+{% extends "layout.html" %} 
+{% block content %}
+    <h1>Your Courses: </h1>
+    {% if current_user.type == 'Professor' %}
+        <a href="{{ url_for('courses.create_course')}}">Create Course</a>
+    {% else %}
+        <a href="{{ url_for('courses.join_course')}}">Join Course</a>
+    {% endif %}
+    {% for course in courses%}
+        <div>
+            <h2><a href="{{ url_for('courses.view_course', course_id = course.id)}}">{{ course.title }}</a></h2>
+        </div>
+    {% endfor%}
+{% endblock content %}

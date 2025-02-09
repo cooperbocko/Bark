@@ -15,11 +15,15 @@ def home():
 def create():
     hashed_password = bcrypt.generate_password_hash("test").decode('utf-8')
     testuser = User(email = 'test@gmail.com', password = hashed_password, type = 'Student')
+    testuser2 = User(email = 'test2@gmail.com', password = hashed_password, type = 'Professor')
     testcourse = Course(title = 'test', code = 'test')
+    testcourse2 = Course(title = 'test2', code = 'test2')
     testattendance = Attendance(date = datetime.now(timezone.utc), code = 'test', expires = False)
     db.session.add(testuser)
     db.session.add(testattendance)
     db.session.add(testcourse)
+    db.session.add(testcourse2)
+    db.session.add(testuser2)
     
     testuser.courses.append(testcourse)
     testuser.attendances.append(testattendance)
