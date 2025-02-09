@@ -1,0 +1,7 @@
+{% extends "layout.html" %} 
+{% block content %}
+<p>users:</p>
+{% for post in posts.items %}
+    <p>{{ post.email }}</p>
+{% endfor %} 
+{% endblock content %}
